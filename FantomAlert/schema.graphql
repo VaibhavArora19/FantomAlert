@@ -1,0 +1,16 @@
+type Notification @entity {
+    id: ID!
+    type: String!
+    title: String! # string
+    body: String! # string
+    subscribers: [Bytes!]! # address[]
+    _channel: Bytes! # address
+    blockTimestamp: BigInt!
+}
+
+type Channel @entity {
+  id: ID!
+  channelName: String! # string
+  channelAddress: Bytes! # address
+  notifications : [Notification!]
+}
