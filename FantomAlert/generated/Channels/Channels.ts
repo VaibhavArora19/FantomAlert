@@ -57,8 +57,8 @@ export class notificationMultiple__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get subscribers(): Bytes {
-    return this._event.parameters[3].value.toBytes();
+  get subscribers(): Array<Address> {
+    return this._event.parameters[3].value.toAddressArray();
   }
 }
 
@@ -117,8 +117,8 @@ export class notificationToAll__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get subscribers(): Bytes {
-    return this._event.parameters[3].value.toBytes();
+  get subscribers(): Array<Address> {
+    return this._event.parameters[3].value.toAddressArray();
   }
 }
 

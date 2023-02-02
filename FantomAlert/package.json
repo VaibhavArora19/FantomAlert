@@ -1,13 +1,13 @@
 {
-  "name": "FantomAlert",
+  "name": "fantomalert",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ vaibhavarora19/FantomAlert",
-    "create-local": "graph create --node http://localhost:8020/ vaibhavarora19/FantomAlert",
-    "remove-local": "graph remove --node http://localhost:8020/ vaibhavarora19/FantomAlert",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 vaibhavarora19/FantomAlert",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ vaibhavarora19/fantomalert",
+    "create-local": "graph create --node http://localhost:8020/ vaibhavarora19/fantomalert",
+    "remove-local": "graph remove --node http://localhost:8020/ vaibhavarora19/fantomalert",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 vaibhavarora19/fantomalert",
     "test": "graph test"
   },
   "dependencies": {

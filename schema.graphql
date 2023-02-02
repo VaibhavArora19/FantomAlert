@@ -12,4 +12,5 @@ type Notification @entity {
     body: String! # string
     subscribers: [Bytes!]! # address[]
     _channel: Bytes! # address
+    blockTimestamp: String!
 }

@@ -113,7 +113,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "_channelName", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "_channelName",
+        "type": "string"
+      }
     ],
     "name": "addChannel",
     "outputs": [],
@@ -121,7 +125,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "channelAddressToChannel",
     "outputs": [
       {
@@ -129,14 +139,28 @@
         "name": "channelAddress",
         "type": "address"
       },
-      { "internalType": "string", "name": "channelName", "type": "string" },
-      { "internalType": "address", "name": "owner", "type": "address" }
+      {
+        "internalType": "string",
+        "name": "channelName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "channels",
     "outputs": [
       {
@@ -144,8 +168,16 @@
         "name": "channelAddress",
         "type": "address"
       },
-      { "internalType": "string", "name": "channelName", "type": "string" },
-      { "internalType": "address", "name": "owner", "type": "address" }
+      {
+        "internalType": "string",
+        "name": "channelName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -161,8 +193,16 @@
             "name": "channelAddress",
             "type": "address"
           },
-          { "internalType": "string", "name": "channelName", "type": "string" },
-          { "internalType": "address", "name": "owner", "type": "address" }
+          {
+            "internalType": "string",
+            "name": "channelName",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          }
         ],
         "internalType": "struct Channels.channel[]",
         "name": "",
@@ -174,7 +214,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "_channelName", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "_channelName",
+        "type": "string"
+      }
     ],
     "name": "getChannelByName",
     "outputs": [
@@ -185,8 +229,16 @@
             "name": "channelAddress",
             "type": "address"
           },
-          { "internalType": "string", "name": "channelName", "type": "string" },
-          { "internalType": "address", "name": "owner", "type": "address" }
+          {
+            "internalType": "string",
+            "name": "channelName",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          }
         ],
         "internalType": "struct Channels.channel",
         "name": "",
@@ -198,10 +250,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "channelOwner", "type": "address" },
-      { "internalType": "string", "name": "title", "type": "string" },
-      { "internalType": "string", "name": "body", "type": "string" },
-      { "internalType": "address", "name": "_channel", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "channelOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "body",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_channel",
+        "type": "address"
+      },
       {
         "internalType": "address[]",
         "name": "subscribers",
@@ -215,10 +283,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "channelOwner", "type": "address" },
-      { "internalType": "string", "name": "title", "type": "string" },
-      { "internalType": "string", "name": "body", "type": "string" },
-      { "internalType": "address", "name": "_channel", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "channelOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "body",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_channel",
+        "type": "address"
+      },
       {
         "internalType": "address[]",
         "name": "subscribers",
@@ -232,11 +316,31 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "channelOwner", "type": "address" },
-      { "internalType": "string", "name": "title", "type": "string" },
-      { "internalType": "string", "name": "body", "type": "string" },
-      { "internalType": "address", "name": "_channel", "type": "address" },
-      { "internalType": "address", "name": "subscriber", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "channelOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "body",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_channel",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "subscriber",
+        "type": "address"
+      }
     ],
     "name": "singleNotification",
     "outputs": [],

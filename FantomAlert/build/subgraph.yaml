@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: Channels
@@ -20,7 +20,7 @@ dataSources:
         - notificationToAll
       abis:
         - name: Channels
-          file: ./abis/Channels.json
+          file: Channels\abis\Channels.json
       eventHandlers:
         - event: newListedChannel(indexed string,indexed address)
           handler: handlenewListedChannel
@@ -30,4 +30,4 @@ dataSources:
           handler: handlenotificationSingle
         - event: notificationToAll(indexed string,string,indexed address,address[])
           handler: handlenotificationToAll
-      file: ./src/channels.ts
+      file: Channels\Channels.wasm

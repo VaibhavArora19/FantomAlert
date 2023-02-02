@@ -28,7 +28,7 @@ export function handlenotificationMultiple(
     let channel = Channel.load(id)
 
     if(channel) {
-      let time = Math.floor(Math.random() * 100000000);
+      let time = Date.now();
 
       let notificationId = event.params._channel.toHex() + time.toString();
       let notification = new Notification(notificationId)
@@ -38,6 +38,7 @@ export function handlenotificationMultiple(
       notification.body = event.params.body;
       notification.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber);
       notification._channel = event.params._channel;
+      notification.blockTimestamp = time.toString();
 
       notification.save();
 
@@ -51,7 +52,7 @@ export function handlenotificationSingle(event: notificationSingleEvent): void {
   let channel = Channel.load(id);
 
   if(channel){
-    let time = Math.floor(Math.random() * 100000000);
+    let time = Date.now();
     let notificationId = event.params._channel.toHex() + time.toString();
     let notification = new Notification(notificationId);
 
@@ -60,6 +61,7 @@ export function handlenotificationSingle(event: notificationSingleEvent): void {
     notification.body = event.params.body;
     notification.subscribers = [event.params.subscriber];
     notification._channel = event.params._channel;
+    notification.blockTimestamp = time.toString();
 
     notification.save();
     
@@ -74,7 +76,7 @@ export function handlenotificationToAll(event: notificationToAllEvent): void {
   let channel = Channel.load(id)
 
   if(channel) {
-    let time = Math.floor(Math.random() * 100000000);
+    let time = Date.now();
 
     let notificationId = event.params._channel.toHex() + time.toString();
     let notification = new Notification(notificationId)
@@ -84,6 +86,7 @@ export function handlenotificationToAll(event: notificationToAllEvent): void {
     notification.body = event.params.body;
     notification.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber);
     notification._channel = event.params._channel;
+    notification.blockTimestamp = time.toString();
 
     notification.save();
 

@@ -1,94 +1,67 @@
 //SPDX-License-Identifier: MIT
 
-pragma solidity >=0.8.0 <0.9.0;
-
-import {Channel} from "./Channel/Channel.sol";
+pragma solidity >=0.7.0 <0.9.0;
 
 contract Channels {
 
-    /// @dev emits an event every time a new channel is created
-    event newListedChannel(string indexed channelName, address indexed channelAddress);
-    event notificationSingle(string indexed title, string body, address indexed _channel, address indexed subscriber);
-    event notificationMultiple(string indexed title, string body, address indexed _channel, address[] indexed subscribers);
-    event notificationToAll(string indexed title, string body, address indexed _channel, address[] indexed subscribers);
+    event newChannel(string title, string description);
+    event newSubscriber(uint channelId, address subscriber);
 
+    ///@dev the total number of channels
+    uint public channels;
+
+    ///@dev the structue of notification
+    struct Notification {
+        string title;
+        string description;
+        address[] subscribers;   
+    }
     /**
-    * @dev struct containing the name and address of the channel 
+    *@dev The structure of each channel
     */
-    struct channel {    
-        address channelAddress;
-        string channelName;
+    struct Channel {
+        uint id;
         address owner;
+        string name;
+        string description;
     }
+
+    ///@dev array of all channels
+    Channel[] public allChannels;
+
+    ///subscribers of each channel;
+    mapping(uint => address[]) public subscribersOfAChannel;
+
+
+    ///notifications of a channel
+    mapping(uint => Notification[]) public notificationsOfAChannel;
+
+
+    ///@dev allow one user to create only one channel
+    mapping(address => bool) public hasChannel;
 
     /**
-    * @dev array to hold all the channels that exist
+    *@dev create a new channel
     */
-    channel[] public channels;
+    function createChannel(string calldata _title, string calldata _description) public payable{
+        require(msg.value >= 0.001 ether, "Amount sent is not correct");
+        require(!hasChannel[msg.sender], "You already have a channel");
 
+        allChannels.push(Channel(channels, msg.sender, _title, _description));
+        hasChannel[msg.sender] = true;
 
-    ///@dev mapping of channel address with channel struct
-    mapping(address => channel) public channelAddressToChannel;
-
-
-    modifier onlyChannelOwner(address channelOwner, address _channel) {
-        require(channelOwner == channelAddressToChannel[_channel].owner, "Not the owner");
-        _;
+        emit newChannel(_title, _description);
     }
 
-
-    /**
-    * @dev function to add a new channel
-    * @param _channelName name of the channel
-    */
-    function addChannel(string memory _channelName) external payable{
-        require(msg.value >= 0.1 ether, "Not enough ether sent");
-
-        Channel newChannel = new Channel(_channelName, msg.sender);
-        channels.push(channel({channelAddress: address(newChannel) ,channelName: _channelName, owner: msg.sender}));
-
-        channelAddressToChannel[address(newChannel)] = channels[channels.length - 1];
-        
-        emit newListedChannel(_channelName, address(newChannel));
-    }
-
-    function getAllChannels() external view returns(channel[] memory){
-        return channels;
-    }
+    function subscribe(uint _id) external {
+        require(_id >= 0 && _id <= channels, "Channel does not exist");
+        subscribersOfAChannel[_id].push(msg.sender);      
     
-    /**
-    * @dev function to get a channel by name
-    * @param _channelName name of the channel
-    */
-    function getChannelByName(string memory _channelName) public view returns(channel memory){
-
-        channel memory existingChannel;
-        for(uint i =0; i<channels.length; i++){
-            if(keccak256(abi.encodePacked(channels[i].channelName)) == keccak256(abi.encodePacked(_channelName))){
-                existingChannel = channels[i];
-                break;
-            }
-        }
-
-        return existingChannel;
+        emit newSubscriber(_id, msg.sender);
     }
 
-    ///Emits an event when only a single subscriber is to benotified
-    function singleNotification(address channelOwner, string calldata title, string calldata body, address _channel, address subscriber ) public onlyChannelOwner(channelOwner, _channel) {
-        
-        emit notificationSingle(title, body, _channel, subscriber);
-    }
 
-    ///Emits an event when all subscribers are to be notified
-    function notificationAll(address channelOwner, string calldata title, string calldata body, address _channel, address[] calldata subscribers) public onlyChannelOwner(channelOwner, _channel){
-
-        emit notificationToAll(title, body, _channel, subscribers);
-    }
-
-    ///Emits an event when multiple subscribers are to be notified
-    function multipleNotification(address channelOwner, string calldata title, string calldata body, address _channel, address[] calldata subscribers) public onlyChannelOwner(channelOwner, _channel){
-
-        emit notificationMultiple(title, body, _channel, subscribers);
-    }
+    fallback() external payable{}
+    receive() external payable{}
 
 }
