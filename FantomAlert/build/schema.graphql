@@ -1,15 +1,16 @@
-type Channel @entity {
-  id: ID!
-  channelName: String! # string
+type Notification @entity(immutable: true) {
+  id: Bytes!
+  channelId: BigInt! # uint256
   channelAddress: Bytes! # address
-  notifications : [Notification!]!
+  title: String! # string
+  description: String! # string
+  subscribers: [Bytes!]! # address[]
 }
 
-type Notification @entity {
-    id: ID!
-    type: String!
-    title: String! # string
-    body: String! # string
-    subscribers: [Bytes!]! # address[]
-    _channel: Bytes! # address
+type Channel @entity(immutable: true) {
+ id: Bytes! # address
+ owner: Bytes! # address 
+ title: String! # string
+ description: String! # string
+ notifications: [Notification!]!
 }

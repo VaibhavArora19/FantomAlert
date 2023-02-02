@@ -10,207 +10,130 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class newListedChannel extends ethereum.Event {
-  get params(): newListedChannel__Params {
-    return new newListedChannel__Params(this);
+export class newChannel extends ethereum.Event {
+  get params(): newChannel__Params {
+    return new newChannel__Params(this);
   }
 }
 
-export class newListedChannel__Params {
-  _event: newListedChannel;
+export class newChannel__Params {
+  _event: newChannel;
 
-  constructor(event: newListedChannel) {
+  constructor(event: newChannel) {
     this._event = event;
   }
 
-  get channelName(): Bytes {
-    return this._event.parameters[0].value.toBytes();
+  get title(): string {
+    return this._event.parameters[0].value.toString();
   }
 
-  get channelAddress(): Address {
+  get description(): string {
+    return this._event.parameters[1].value.toString();
+  }
+}
+
+export class newNotification extends ethereum.Event {
+  get params(): newNotification__Params {
+    return new newNotification__Params(this);
+  }
+}
+
+export class newNotification__Params {
+  _event: newNotification;
+
+  constructor(event: newNotification) {
+    this._event = event;
+  }
+
+  get channelId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get subscribers(): Array<Address> {
+    return this._event.parameters[1].value.toAddressArray();
+  }
+
+  get title(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get description(): string {
+    return this._event.parameters[3].value.toString();
+  }
+}
+
+export class newSubscriber extends ethereum.Event {
+  get params(): newSubscriber__Params {
+    return new newSubscriber__Params(this);
+  }
+}
+
+export class newSubscriber__Params {
+  _event: newSubscriber;
+
+  constructor(event: newSubscriber) {
+    this._event = event;
+  }
+
+  get channelId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get subscriber(): Address {
     return this._event.parameters[1].value.toAddress();
   }
 }
 
-export class notificationMultiple extends ethereum.Event {
-  get params(): notificationMultiple__Params {
-    return new notificationMultiple__Params(this);
-  }
-}
+export class Channels__allChannelsResult {
+  value0: BigInt;
+  value1: Address;
+  value2: string;
+  value3: string;
 
-export class notificationMultiple__Params {
-  _event: notificationMultiple;
-
-  constructor(event: notificationMultiple) {
-    this._event = event;
-  }
-
-  get title(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-
-  get body(): string {
-    return this._event.parameters[1].value.toString();
-  }
-
-  get _channel(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get subscribers(): Array<Address> {
-    return this._event.parameters[3].value.toAddressArray();
-  }
-}
-
-export class notificationSingle extends ethereum.Event {
-  get params(): notificationSingle__Params {
-    return new notificationSingle__Params(this);
-  }
-}
-
-export class notificationSingle__Params {
-  _event: notificationSingle;
-
-  constructor(event: notificationSingle) {
-    this._event = event;
-  }
-
-  get title(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-
-  get body(): string {
-    return this._event.parameters[1].value.toString();
-  }
-
-  get _channel(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get subscriber(): Address {
-    return this._event.parameters[3].value.toAddress();
-  }
-}
-
-export class notificationToAll extends ethereum.Event {
-  get params(): notificationToAll__Params {
-    return new notificationToAll__Params(this);
-  }
-}
-
-export class notificationToAll__Params {
-  _event: notificationToAll;
-
-  constructor(event: notificationToAll) {
-    this._event = event;
-  }
-
-  get title(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-
-  get body(): string {
-    return this._event.parameters[1].value.toString();
-  }
-
-  get _channel(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get subscribers(): Array<Address> {
-    return this._event.parameters[3].value.toAddressArray();
-  }
-}
-
-export class Channels__channelAddressToChannelResult {
-  value0: Address;
-  value1: string;
-  value2: Address;
-
-  constructor(value0: Address, value1: string, value2: Address) {
+  constructor(value0: BigInt, value1: Address, value2: string, value3: string) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
+    this.value3 = value3;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromAddress(this.value0));
-    map.set("value1", ethereum.Value.fromString(this.value1));
-    map.set("value2", ethereum.Value.fromAddress(this.value2));
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromAddress(this.value1));
+    map.set("value2", ethereum.Value.fromString(this.value2));
+    map.set("value3", ethereum.Value.fromString(this.value3));
     return map;
   }
 
-  getChannelAddress(): Address {
+  getId(): BigInt {
     return this.value0;
   }
 
-  getChannelName(): string {
+  getOwner(): Address {
     return this.value1;
   }
 
-  getOwner(): Address {
+  getName(): string {
     return this.value2;
+  }
+
+  getDescription(): string {
+    return this.value3;
   }
 }
 
-export class Channels__channelsResult {
-  value0: Address;
-  value1: string;
-  value2: Address;
-
-  constructor(value0: Address, value1: string, value2: Address) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
+export class Channels__getAllNotificationsResultValue0Struct extends ethereum.Tuple {
+  get title(): string {
+    return this[0].toString();
   }
 
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromAddress(this.value0));
-    map.set("value1", ethereum.Value.fromString(this.value1));
-    map.set("value2", ethereum.Value.fromAddress(this.value2));
-    return map;
-  }
-
-  getChannelAddress(): Address {
-    return this.value0;
-  }
-
-  getChannelName(): string {
-    return this.value1;
-  }
-
-  getOwner(): Address {
-    return this.value2;
-  }
-}
-
-export class Channels__getAllChannelsResultValue0Struct extends ethereum.Tuple {
-  get channelAddress(): Address {
-    return this[0].toAddress();
-  }
-
-  get channelName(): string {
+  get description(): string {
     return this[1].toString();
   }
 
-  get owner(): Address {
-    return this[2].toAddress();
-  }
-}
-
-export class Channels__getChannelByNameResultValue0Struct extends ethereum.Tuple {
-  get channelAddress(): Address {
-    return this[0].toAddress();
-  }
-
-  get channelName(): string {
-    return this[1].toString();
-  }
-
-  get owner(): Address {
-    return this[2].toAddress();
+  get subscribers(): Array<Address> {
+    return this[2].toAddressArray();
   }
 }
 
@@ -219,61 +142,27 @@ export class Channels extends ethereum.SmartContract {
     return new Channels("Channels", address);
   }
 
-  channelAddressToChannel(
-    param0: Address
-  ): Channels__channelAddressToChannelResult {
+  allChannels(param0: BigInt): Channels__allChannelsResult {
     let result = super.call(
-      "channelAddressToChannel",
-      "channelAddressToChannel(address):(address,string,address)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-
-    return new Channels__channelAddressToChannelResult(
-      result[0].toAddress(),
-      result[1].toString(),
-      result[2].toAddress()
-    );
-  }
-
-  try_channelAddressToChannel(
-    param0: Address
-  ): ethereum.CallResult<Channels__channelAddressToChannelResult> {
-    let result = super.tryCall(
-      "channelAddressToChannel",
-      "channelAddressToChannel(address):(address,string,address)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new Channels__channelAddressToChannelResult(
-        value[0].toAddress(),
-        value[1].toString(),
-        value[2].toAddress()
-      )
-    );
-  }
-
-  channels(param0: BigInt): Channels__channelsResult {
-    let result = super.call(
-      "channels",
-      "channels(uint256):(address,string,address)",
+      "allChannels",
+      "allChannels(uint256):(uint256,address,string,string)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return new Channels__channelsResult(
-      result[0].toAddress(),
-      result[1].toString(),
-      result[2].toAddress()
+    return new Channels__allChannelsResult(
+      result[0].toBigInt(),
+      result[1].toAddress(),
+      result[2].toString(),
+      result[3].toString()
     );
   }
 
-  try_channels(param0: BigInt): ethereum.CallResult<Channels__channelsResult> {
+  try_allChannels(
+    param0: BigInt
+  ): ethereum.CallResult<Channels__allChannelsResult> {
     let result = super.tryCall(
-      "channels",
-      "channels(uint256):(address,string,address)",
+      "allChannels",
+      "allChannels(uint256):(uint256,address,string,string)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -281,239 +170,314 @@ export class Channels extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Channels__channelsResult(
-        value[0].toAddress(),
-        value[1].toString(),
-        value[2].toAddress()
+      new Channels__allChannelsResult(
+        value[0].toBigInt(),
+        value[1].toAddress(),
+        value[2].toString(),
+        value[3].toString()
       )
     );
   }
 
-  getAllChannels(): Array<Channels__getAllChannelsResultValue0Struct> {
-    let result = super.call(
-      "getAllChannels",
-      "getAllChannels():((address,string,address)[])",
-      []
-    );
+  channels(): BigInt {
+    let result = super.call("channels", "channels():(uint256)", []);
 
-    return result[0].toTupleArray<Channels__getAllChannelsResultValue0Struct>();
+    return result[0].toBigInt();
   }
 
-  try_getAllChannels(): ethereum.CallResult<
-    Array<Channels__getAllChannelsResultValue0Struct>
+  try_channels(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("channels", "channels():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getAllNotifications(
+    _id: BigInt
+  ): Array<Channels__getAllNotificationsResultValue0Struct> {
+    let result = super.call(
+      "getAllNotifications",
+      "getAllNotifications(uint256):((string,string,address[])[])",
+      [ethereum.Value.fromUnsignedBigInt(_id)]
+    );
+
+    return result[0].toTupleArray<
+      Channels__getAllNotificationsResultValue0Struct
+    >();
+  }
+
+  try_getAllNotifications(
+    _id: BigInt
+  ): ethereum.CallResult<
+    Array<Channels__getAllNotificationsResultValue0Struct>
   > {
     let result = super.tryCall(
-      "getAllChannels",
-      "getAllChannels():((address,string,address)[])",
-      []
+      "getAllNotifications",
+      "getAllNotifications(uint256):((string,string,address[])[])",
+      [ethereum.Value.fromUnsignedBigInt(_id)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTupleArray<Channels__getAllChannelsResultValue0Struct>()
+      value[0].toTupleArray<Channels__getAllNotificationsResultValue0Struct>()
     );
   }
 
-  getChannelByName(
-    _channelName: string
-  ): Channels__getChannelByNameResultValue0Struct {
+  getSubscribers(_id: BigInt): Array<Address> {
     let result = super.call(
-      "getChannelByName",
-      "getChannelByName(string):((address,string,address))",
-      [ethereum.Value.fromString(_channelName)]
+      "getSubscribers",
+      "getSubscribers(uint256):(address[])",
+      [ethereum.Value.fromUnsignedBigInt(_id)]
     );
 
-    return changetype<Channels__getChannelByNameResultValue0Struct>(
-      result[0].toTuple()
-    );
+    return result[0].toAddressArray();
   }
 
-  try_getChannelByName(
-    _channelName: string
-  ): ethereum.CallResult<Channels__getChannelByNameResultValue0Struct> {
+  try_getSubscribers(_id: BigInt): ethereum.CallResult<Array<Address>> {
     let result = super.tryCall(
-      "getChannelByName",
-      "getChannelByName(string):((address,string,address))",
-      [ethereum.Value.fromString(_channelName)]
+      "getSubscribers",
+      "getSubscribers(uint256):(address[])",
+      [ethereum.Value.fromUnsignedBigInt(_id)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(
-      changetype<Channels__getChannelByNameResultValue0Struct>(
-        value[0].toTuple()
-      )
-    );
+    return ethereum.CallResult.fromValue(value[0].toAddressArray());
+  }
+
+  hasChannel(param0: Address): boolean {
+    let result = super.call("hasChannel", "hasChannel(address):(bool)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+
+    return result[0].toBoolean();
+  }
+
+  try_hasChannel(param0: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall("hasChannel", "hasChannel(address):(bool)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 }
 
-export class AddChannelCall extends ethereum.Call {
-  get inputs(): AddChannelCall__Inputs {
-    return new AddChannelCall__Inputs(this);
+export class DefaultCall extends ethereum.Call {
+  get inputs(): DefaultCall__Inputs {
+    return new DefaultCall__Inputs(this);
   }
 
-  get outputs(): AddChannelCall__Outputs {
-    return new AddChannelCall__Outputs(this);
+  get outputs(): DefaultCall__Outputs {
+    return new DefaultCall__Outputs(this);
   }
 }
 
-export class AddChannelCall__Inputs {
-  _call: AddChannelCall;
+export class DefaultCall__Inputs {
+  _call: DefaultCall;
 
-  constructor(call: AddChannelCall) {
+  constructor(call: DefaultCall) {
+    this._call = call;
+  }
+}
+
+export class DefaultCall__Outputs {
+  _call: DefaultCall;
+
+  constructor(call: DefaultCall) {
+    this._call = call;
+  }
+}
+
+export class CreateChannelCall extends ethereum.Call {
+  get inputs(): CreateChannelCall__Inputs {
+    return new CreateChannelCall__Inputs(this);
+  }
+
+  get outputs(): CreateChannelCall__Outputs {
+    return new CreateChannelCall__Outputs(this);
+  }
+}
+
+export class CreateChannelCall__Inputs {
+  _call: CreateChannelCall;
+
+  constructor(call: CreateChannelCall) {
     this._call = call;
   }
 
-  get _channelName(): string {
+  get _title(): string {
     return this._call.inputValues[0].value.toString();
   }
-}
 
-export class AddChannelCall__Outputs {
-  _call: AddChannelCall;
-
-  constructor(call: AddChannelCall) {
-    this._call = call;
-  }
-}
-
-export class MultipleNotificationCall extends ethereum.Call {
-  get inputs(): MultipleNotificationCall__Inputs {
-    return new MultipleNotificationCall__Inputs(this);
-  }
-
-  get outputs(): MultipleNotificationCall__Outputs {
-    return new MultipleNotificationCall__Outputs(this);
-  }
-}
-
-export class MultipleNotificationCall__Inputs {
-  _call: MultipleNotificationCall;
-
-  constructor(call: MultipleNotificationCall) {
-    this._call = call;
-  }
-
-  get channelOwner(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get title(): string {
+  get _description(): string {
     return this._call.inputValues[1].value.toString();
   }
-
-  get body(): string {
-    return this._call.inputValues[2].value.toString();
-  }
-
-  get _channel(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-
-  get subscribers(): Array<Address> {
-    return this._call.inputValues[4].value.toAddressArray();
-  }
 }
 
-export class MultipleNotificationCall__Outputs {
-  _call: MultipleNotificationCall;
+export class CreateChannelCall__Outputs {
+  _call: CreateChannelCall;
 
-  constructor(call: MultipleNotificationCall) {
+  constructor(call: CreateChannelCall) {
     this._call = call;
   }
 }
 
-export class NotificationAllCall extends ethereum.Call {
-  get inputs(): NotificationAllCall__Inputs {
-    return new NotificationAllCall__Inputs(this);
+export class NotficationForSingleCall extends ethereum.Call {
+  get inputs(): NotficationForSingleCall__Inputs {
+    return new NotficationForSingleCall__Inputs(this);
   }
 
-  get outputs(): NotificationAllCall__Outputs {
-    return new NotificationAllCall__Outputs(this);
+  get outputs(): NotficationForSingleCall__Outputs {
+    return new NotficationForSingleCall__Outputs(this);
   }
 }
 
-export class NotificationAllCall__Inputs {
-  _call: NotificationAllCall;
+export class NotficationForSingleCall__Inputs {
+  _call: NotficationForSingleCall;
 
-  constructor(call: NotificationAllCall) {
+  constructor(call: NotficationForSingleCall) {
     this._call = call;
   }
 
-  get channelOwner(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get title(): string {
-    return this._call.inputValues[1].value.toString();
-  }
-
-  get body(): string {
-    return this._call.inputValues[2].value.toString();
-  }
-
-  get _channel(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-
-  get subscribers(): Array<Address> {
-    return this._call.inputValues[4].value.toAddressArray();
-  }
-}
-
-export class NotificationAllCall__Outputs {
-  _call: NotificationAllCall;
-
-  constructor(call: NotificationAllCall) {
-    this._call = call;
-  }
-}
-
-export class SingleNotificationCall extends ethereum.Call {
-  get inputs(): SingleNotificationCall__Inputs {
-    return new SingleNotificationCall__Inputs(this);
-  }
-
-  get outputs(): SingleNotificationCall__Outputs {
-    return new SingleNotificationCall__Outputs(this);
-  }
-}
-
-export class SingleNotificationCall__Inputs {
-  _call: SingleNotificationCall;
-
-  constructor(call: SingleNotificationCall) {
-    this._call = call;
-  }
-
-  get channelOwner(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get title(): string {
-    return this._call.inputValues[1].value.toString();
-  }
-
-  get body(): string {
-    return this._call.inputValues[2].value.toString();
-  }
-
-  get _channel(): Address {
-    return this._call.inputValues[3].value.toAddress();
+  get _id(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
   }
 
   get subscriber(): Address {
-    return this._call.inputValues[4].value.toAddress();
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get title(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get description(): string {
+    return this._call.inputValues[3].value.toString();
   }
 }
 
-export class SingleNotificationCall__Outputs {
-  _call: SingleNotificationCall;
+export class NotficationForSingleCall__Outputs {
+  _call: NotficationForSingleCall;
 
-  constructor(call: SingleNotificationCall) {
+  constructor(call: NotficationForSingleCall) {
+    this._call = call;
+  }
+}
+
+export class NotificationForAllCall extends ethereum.Call {
+  get inputs(): NotificationForAllCall__Inputs {
+    return new NotificationForAllCall__Inputs(this);
+  }
+
+  get outputs(): NotificationForAllCall__Outputs {
+    return new NotificationForAllCall__Outputs(this);
+  }
+}
+
+export class NotificationForAllCall__Inputs {
+  _call: NotificationForAllCall;
+
+  constructor(call: NotificationForAllCall) {
+    this._call = call;
+  }
+
+  get _id(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get title(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
+  get description(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+}
+
+export class NotificationForAllCall__Outputs {
+  _call: NotificationForAllCall;
+
+  constructor(call: NotificationForAllCall) {
+    this._call = call;
+  }
+}
+
+export class NotificationForMultipleCall extends ethereum.Call {
+  get inputs(): NotificationForMultipleCall__Inputs {
+    return new NotificationForMultipleCall__Inputs(this);
+  }
+
+  get outputs(): NotificationForMultipleCall__Outputs {
+    return new NotificationForMultipleCall__Outputs(this);
+  }
+}
+
+export class NotificationForMultipleCall__Inputs {
+  _call: NotificationForMultipleCall;
+
+  constructor(call: NotificationForMultipleCall) {
+    this._call = call;
+  }
+
+  get _id(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get subscribers(): Array<Address> {
+    return this._call.inputValues[1].value.toAddressArray();
+  }
+
+  get title(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get description(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+}
+
+export class NotificationForMultipleCall__Outputs {
+  _call: NotificationForMultipleCall;
+
+  constructor(call: NotificationForMultipleCall) {
+    this._call = call;
+  }
+}
+
+export class SubscribeCall extends ethereum.Call {
+  get inputs(): SubscribeCall__Inputs {
+    return new SubscribeCall__Inputs(this);
+  }
+
+  get outputs(): SubscribeCall__Outputs {
+    return new SubscribeCall__Outputs(this);
+  }
+}
+
+export class SubscribeCall__Inputs {
+  _call: SubscribeCall;
+
+  constructor(call: SubscribeCall) {
+    this._call = call;
+  }
+
+  get _id(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SubscribeCall__Outputs {
+  _call: SubscribeCall;
+
+  constructor(call: SubscribeCall) {
     this._call = call;
   }
 }

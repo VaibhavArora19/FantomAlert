@@ -11,44 +11,46 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Channel extends Entity {
-  constructor(id: string) {
+export class Notification extends Entity {
+  constructor(id: Bytes) {
     super();
-    this.set("id", Value.fromString(id));
+    this.set("id", Value.fromBytes(id));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Channel entity without an ID");
+    assert(id != null, "Cannot save Notification entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Channel must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.BYTES,
+        `Entities of type Notification must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Channel", id.toString(), this);
+      store.set("Notification", id.toBytes().toHexString(), this);
     }
   }
 
-  static load(id: string): Channel | null {
-    return changetype<Channel | null>(store.get("Channel", id));
+  static load(id: Bytes): Notification | null {
+    return changetype<Notification | null>(
+      store.get("Notification", id.toHexString())
+    );
   }
 
-  get id(): string {
+  get id(): Bytes {
     let value = this.get("id");
-    return value!.toString();
+    return value!.toBytes();
   }
 
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
   }
 
-  get channelName(): string {
-    let value = this.get("channelName");
-    return value!.toString();
+  get channelId(): BigInt {
+    let value = this.get("channelId");
+    return value!.toBigInt();
   }
 
-  set channelName(value: string) {
-    this.set("channelName", Value.fromString(value));
+  set channelId(value: BigInt) {
+    this.set("channelId", Value.fromBigInt(value));
   }
 
   get channelAddress(): Bytes {
@@ -60,54 +62,72 @@ export class Channel extends Entity {
     this.set("channelAddress", Value.fromBytes(value));
   }
 
-  get notifications(): Array<string> {
-    let value = this.get("notifications");
-    return value!.toStringArray();
+  get title(): string {
+    let value = this.get("title");
+    return value!.toString();
   }
 
-  set notifications(value: Array<string>) {
-    this.set("notifications", Value.fromStringArray(value));
+  set title(value: string) {
+    this.set("title", Value.fromString(value));
+  }
+
+  get description(): string {
+    let value = this.get("description");
+    return value!.toString();
+  }
+
+  set description(value: string) {
+    this.set("description", Value.fromString(value));
+  }
+
+  get subscribers(): Array<Bytes> {
+    let value = this.get("subscribers");
+    return value!.toBytesArray();
+  }
+
+  set subscribers(value: Array<Bytes>) {
+    this.set("subscribers", Value.fromBytesArray(value));
   }
 }
 
-export class Notification extends Entity {
-  constructor(id: string) {
+export class Channel extends Entity {
+  constructor(id: Bytes) {
     super();
-    this.set("id", Value.fromString(id));
+    this.set("id", Value.fromBytes(id));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Notification entity without an ID");
+    assert(id != null, "Cannot save Channel entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Notification must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.BYTES,
+        `Entities of type Channel must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Notification", id.toString(), this);
+      store.set("Channel", id.toBytes().toHexString(), this);
     }
   }
 
-  static load(id: string): Notification | null {
-    return changetype<Notification | null>(store.get("Notification", id));
+  static load(id: Bytes): Channel | null {
+    return changetype<Channel | null>(store.get("Channel", id.toHexString()));
   }
 
-  get id(): string {
+  get id(): Bytes {
     let value = this.get("id");
-    return value!.toString();
+    return value!.toBytes();
   }
 
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
   }
 
-  get type(): string {
-    let value = this.get("type");
-    return value!.toString();
+  get owner(): Bytes {
+    let value = this.get("owner");
+    return value!.toBytes();
   }
 
-  set type(value: string) {
-    this.set("type", Value.fromString(value));
+  set owner(value: Bytes) {
+    this.set("owner", Value.fromBytes(value));
   }
 
   get title(): string {
@@ -119,30 +139,21 @@ export class Notification extends Entity {
     this.set("title", Value.fromString(value));
   }
 
-  get body(): string {
-    let value = this.get("body");
+  get description(): string {
+    let value = this.get("description");
     return value!.toString();
   }
 
-  set body(value: string) {
-    this.set("body", Value.fromString(value));
+  set description(value: string) {
+    this.set("description", Value.fromString(value));
   }
 
-  get subscribers(): Array<Bytes> {
-    let value = this.get("subscribers");
+  get notifications(): Array<Bytes> {
+    let value = this.get("notifications");
     return value!.toBytesArray();
   }
 
-  set subscribers(value: Array<Bytes>) {
-    this.set("subscribers", Value.fromBytesArray(value));
-  }
-
-  get _channel(): Bytes {
-    let value = this.get("_channel");
-    return value!.toBytes();
-  }
-
-  set _channel(value: Bytes) {
-    this.set("_channel", Value.fromBytes(value));
+  set notifications(value: Array<Bytes>) {
+    this.set("notifications", Value.fromBytesArray(value));
   }
 }

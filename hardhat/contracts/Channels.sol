@@ -4,8 +4,9 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract Channels {
 
-    event newChannel(string title, string description);
+    event newChannel(uint channelId, string title, string description);
     event newSubscriber(uint channelId, address subscriber);
+    event newNotification(uint notificationId, uint channelId, address[] subscribers, string title, string description);
 
     ///@dev the total number of channels
     uint public channels;
@@ -30,11 +31,11 @@ contract Channels {
     Channel[] public allChannels;
 
     ///subscribers of each channel;
-    mapping(uint => address[]) public subscribersOfAChannel;
+    mapping(uint => address[]) internal subscribersOfAChannel;
 
 
     ///notifications of a channel
-    mapping(uint => Notification[]) public notificationsOfAChannel;
+    mapping(uint => Notification[]) internal notificationsOfAChannel;
 
 
     ///@dev allow one user to create only one channel
@@ -42,6 +43,8 @@ contract Channels {
 
     /**
     *@dev create a new channel
+    *@param _title the title of the channel
+    @param _description the description of the channel
     */
     function createChannel(string calldata _title, string calldata _description) public payable{
         require(msg.value >= 0.001 ether, "Amount sent is not correct");
@@ -50,9 +53,11 @@ contract Channels {
         allChannels.push(Channel(channels, msg.sender, _title, _description));
         hasChannel[msg.sender] = true;
 
-        emit newChannel(_title, _description);
+        emit newChannel(channels, _title, _description);
     }
 
+    ///@dev subscribe to a channel
+    ///@param _id the id of the channel
     function subscribe(uint _id) external {
         require(_id >= 0 && _id <= channels, "Channel does not exist");
         subscribersOfAChannel[_id].push(msg.sender);      
@@ -60,6 +65,85 @@ contract Channels {
         emit newSubscriber(_id, msg.sender);
     }
 
+    /**
+    *@dev send notification to one subscriber of a channel
+    *@param _id of the channel
+    *@param subscriber  is the address of subscriber
+    *@param title of the notification
+    *@param description of the notification
+    */
+    function notficationForSingle(uint _id, address subscriber, string calldata title, string calldata description) external {
+        require(_id >= 0 && _id <= channels, "Channel does not exist");
+        require(msg.sender == allChannels[_id].owner, "You are not the owner of this channel");
+
+        for(uint i = 0; i<subscribersOfAChannel[_id].length; i++){
+
+            if(subscribersOfAChannel[_id][i] == subscriber){
+                address[] memory subscriberArray = new address[](1);
+                subscriberArray[0] = subscriber;
+
+                notificationsOfAChannel[_id].push(Notification(title, description, subscriberArray));
+
+                emit newNotification(notificationsOfAChannel[_id].length, _id, subscriberArray, title, description);
+            }
+        }
+    }
+
+    /**
+    * @dev send notification to multiple subscribers of a channel
+    *@param subscribers is the addresses of subscriber
+    *@param title of the notification
+    *@param description of the notification
+    */
+    function notificationForMultiple(uint _id, address[] memory subscribers, string calldata title, string calldata description) external {
+        require(_id >= 0 && _id <= channels, "Channel does not exist");
+        require(msg.sender == allChannels[_id].owner, "You are not the owner of this channel");
+
+        for(uint i =0; i<subscribers.length; i++){
+            bool isExist = false;
+
+            for(uint j = 0; j<subscribersOfAChannel[_id].length; j++) {
+                if(subscribers[i] == subscribersOfAChannel[_id][j]){
+                    isExist = true;
+                    continue;                   
+                }    
+            }
+            if(!isExist) {
+                revert("One of the address has not subscribed");
+            }
+        }
+
+        notificationsOfAChannel[_id].push(Notification(title, description, subscribers));
+
+        emit newNotification(notificationsOfAChannel[_id].length ,_id, subscribers, title, description);
+    }
+
+    /**
+    * @dev send notification to multiple subscribers of a channel
+    *@param title of the notification
+    *@param description of the notification
+    */
+    function notificationForAll(uint _id, string calldata title, string calldata description) external{
+        require(_id >= 0 && _id <= channels, "Channel does not exist");
+        require(msg.sender == allChannels[_id].owner, "You are not the owner of this channel");
+
+        notificationsOfAChannel[_id].push(Notification(title, description, subscribersOfAChannel[_id]));
+
+        emit newNotification(notificationsOfAChannel[_id].length, _id, subscribersOfAChannel[_id], title, description);
+    }
+
+    ///@dev get all the subscriber of a particular channel
+    function getSubscribers(uint _id) external view returns(address[] memory){
+        require(msg.sender == allChannels[_id].owner, "You are not the owner of this channel");
+
+        return subscribersOfAChannel[_id];
+    }
+
+    function getAllNotifications(uint _id) external view returns(Notification[] memory) {
+        require(msg.sender == allChannels[_id].owner, "You are not the owner of this channel");
+
+        return notificationsOfAChannel[_id];
+    }
 
     fallback() external payable{}
     receive() external payable{}

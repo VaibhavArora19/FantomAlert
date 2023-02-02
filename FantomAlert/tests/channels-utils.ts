@@ -1,121 +1,87 @@
 import { newMockEvent } from "matchstick-as"
-import { ethereum, Address } from "@graphprotocol/graph-ts"
+import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
 import {
-  newListedChannel,
-  notificationMultiple,
-  notificationSingle,
-  notificationToAll
+  newChannel,
+  newNotification,
+  newSubscriber
 } from "../generated/Channels/Channels"
 
-export function createnewListedChannelEvent(
-  channelName: string,
-  channelAddress: Address
-): newListedChannel {
-  let newListedChannelEvent = changetype<newListedChannel>(newMockEvent())
-
-  newListedChannelEvent.parameters = new Array()
-
-  newListedChannelEvent.parameters.push(
-    new ethereum.EventParam(
-      "channelName",
-      ethereum.Value.fromString(channelName)
-    )
-  )
-  newListedChannelEvent.parameters.push(
-    new ethereum.EventParam(
-      "channelAddress",
-      ethereum.Value.fromAddress(channelAddress)
-    )
-  )
-
-  return newListedChannelEvent
-}
-
-export function createnotificationMultipleEvent(
+export function createnewChannelEvent(
   title: string,
-  body: string,
-  _channel: Address,
-  subscribers: Array<Address>
-): notificationMultiple {
-  let notificationMultipleEvent = changetype<notificationMultiple>(
-    newMockEvent()
-  )
+  description: string
+): newChannel {
+  let newChannelEvent = changetype<newChannel>(newMockEvent())
 
-  notificationMultipleEvent.parameters = new Array()
+  newChannelEvent.parameters = new Array()
 
-  notificationMultipleEvent.parameters.push(
+  newChannelEvent.parameters.push(
     new ethereum.EventParam("title", ethereum.Value.fromString(title))
   )
-  notificationMultipleEvent.parameters.push(
-    new ethereum.EventParam("body", ethereum.Value.fromString(body))
+  newChannelEvent.parameters.push(
+    new ethereum.EventParam(
+      "description",
+      ethereum.Value.fromString(description)
+    )
   )
-  notificationMultipleEvent.parameters.push(
-    new ethereum.EventParam("_channel", ethereum.Value.fromAddress(_channel))
+
+  return newChannelEvent
+}
+
+export function createnewNotificationEvent(
+  channelId: BigInt,
+  subscribers: Array<Address>,
+  title: string,
+  description: string
+): newNotification {
+  let newNotificationEvent = changetype<newNotification>(newMockEvent())
+
+  newNotificationEvent.parameters = new Array()
+
+  newNotificationEvent.parameters.push(
+    new ethereum.EventParam(
+      "channelId",
+      ethereum.Value.fromUnsignedBigInt(channelId)
+    )
   )
-  notificationMultipleEvent.parameters.push(
+  newNotificationEvent.parameters.push(
     new ethereum.EventParam(
       "subscribers",
       ethereum.Value.fromAddressArray(subscribers)
     )
   )
-
-  return notificationMultipleEvent
-}
-
-export function createnotificationSingleEvent(
-  title: string,
-  body: string,
-  _channel: Address,
-  subscriber: Address
-): notificationSingle {
-  let notificationSingleEvent = changetype<notificationSingle>(newMockEvent())
-
-  notificationSingleEvent.parameters = new Array()
-
-  notificationSingleEvent.parameters.push(
+  newNotificationEvent.parameters.push(
     new ethereum.EventParam("title", ethereum.Value.fromString(title))
   )
-  notificationSingleEvent.parameters.push(
-    new ethereum.EventParam("body", ethereum.Value.fromString(body))
+  newNotificationEvent.parameters.push(
+    new ethereum.EventParam(
+      "description",
+      ethereum.Value.fromString(description)
+    )
   )
-  notificationSingleEvent.parameters.push(
-    new ethereum.EventParam("_channel", ethereum.Value.fromAddress(_channel))
+
+  return newNotificationEvent
+}
+
+export function createnewSubscriberEvent(
+  channelId: BigInt,
+  subscriber: Address
+): newSubscriber {
+  let newSubscriberEvent = changetype<newSubscriber>(newMockEvent())
+
+  newSubscriberEvent.parameters = new Array()
+
+  newSubscriberEvent.parameters.push(
+    new ethereum.EventParam(
+      "channelId",
+      ethereum.Value.fromUnsignedBigInt(channelId)
+    )
   )
-  notificationSingleEvent.parameters.push(
+  newSubscriberEvent.parameters.push(
     new ethereum.EventParam(
       "subscriber",
       ethereum.Value.fromAddress(subscriber)
     )
   )
 
-  return notificationSingleEvent
-}
-
-export function createnotificationToAllEvent(
-  title: string,
-  body: string,
-  _channel: Address,
-  subscribers: Array<Address>
-): notificationToAll {
-  let notificationToAllEvent = changetype<notificationToAll>(newMockEvent())
-
-  notificationToAllEvent.parameters = new Array()
-
-  notificationToAllEvent.parameters.push(
-    new ethereum.EventParam("title", ethereum.Value.fromString(title))
-  )
-  notificationToAllEvent.parameters.push(
-    new ethereum.EventParam("body", ethereum.Value.fromString(body))
-  )
-  notificationToAllEvent.parameters.push(
-    new ethereum.EventParam("_channel", ethereum.Value.fromAddress(_channel))
-  )
-  notificationToAllEvent.parameters.push(
-    new ethereum.EventParam(
-      "subscribers",
-      ethereum.Value.fromAddressArray(subscribers)
-    )
-  )
-
-  return notificationToAllEvent
+  return newSubscriberEvent
 }

@@ -6,28 +6,25 @@ dataSources:
     name: Channels
     network: fantom-testnet
     source:
-      address: "0x53Df47f2342F4dDdc06c6A943DC885E7DA4fc651"
+      address: "0x9cdaf55edFcb42f7A65d2ffbE7A5Fd80Ed65C326"
       abi: Channels
-      startBlock: 13711448
+      startBlock: 13716664
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - newListedChannel
-        - notificationMultiple
-        - notificationSingle
-        - notificationToAll
+        - newChannel
+        - newNotification
+        - newSubscriber
       abis:
         - name: Channels
           file: ./abis/Channels.json
       eventHandlers:
-        - event: newListedChannel(indexed string,indexed address)
-          handler: handlenewListedChannel
-        - event: notificationMultiple(indexed string,string,indexed address,address[])
-          handler: handlenotificationMultiple
-        - event: notificationSingle(indexed string,string,indexed address,address)
-          handler: handlenotificationSingle
-        - event: notificationToAll(indexed string,string,indexed address,address[])
-          handler: handlenotificationToAll
+        - event: newChannel(string,string)
+          handler: handlenewChannel
+        - event: newNotification(uint256,address[],string,string)
+          handler: handlenewNotification
+        - event: newSubscriber(uint256,address)
+          handler: handlenewSubscriber
       file: ./src/channels.ts

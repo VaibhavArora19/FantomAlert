@@ -1,92 +1,30 @@
-import { Bytes } from "@graphprotocol/graph-ts";
+import { Bytes } from "@graphprotocol/graph-ts"
 import {
-  newListedChannel as newListedChannelEvent,
-  notificationMultiple as notificationMultipleEvent,
-  notificationSingle as notificationSingleEvent,
-  notificationToAll as notificationToAllEvent
+  newChannel as newChannelEvent,
+  newNotification as newNotificationEvent,
+  newSubscriber as newSubscriberEvent
 } from "../generated/Channels/Channels"
-import {
-  Channel, Notification
-} from "../generated/schema"
+import { Channel, Notification } from "../generated/schema"
 
-export function handlenewListedChannel(event: newListedChannelEvent): void {
-    const id = event.params.channelAddress.toHex();
+export function handlenewChannel(event: newChannelEvent): void {
+  let entity = new Channel(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.title = event.params.title
+  entity.description = event.params.description
 
-    let channel = new Channel(id);
-
-    channel.channelName = event.params.channelName.toString();
-    channel.channelAddress = event.params.channelAddress;
-
-    channel.save();
+  entity.save()
 }
 
-export function handlenotificationMultiple(
-  event: notificationMultipleEvent
-): void {
-    const id = event.params._channel.toHex();
+export function handlenewNotification(event: newNotificationEvent): void {
+  
+  let entity = new Notification(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.channelId = event.params.channelId
+  entity.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber)
+  entity.title = event.params.title
+  entity.description = event.params.description
 
-    let channel = Channel.load(id)
-
-    if(channel) {
-      let time = Math.floor(Math.random() * 100000000);
-
-      let notificationId = event.params._channel.toHex() + time.toString();
-      let notification = new Notification(notificationId)
-
-      notification.type = "Multiple"
-      notification.title = event.params.title.toString()
-      notification.body = event.params.body;
-      notification.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber);
-      notification._channel = event.params._channel;
-
-      notification.save();
-
-      channel.notifications.push(notificationId);
-    }
-}
-
-export function handlenotificationSingle(event: notificationSingleEvent): void {
-  const id = event.params._channel.toHex();
-
-  let channel = Channel.load(id);
-
-  if(channel){
-    let time = Math.floor(Math.random() * 100000000);
-    let notificationId = event.params._channel.toHex() + time.toString();
-    let notification = new Notification(notificationId);
-
-    notification.type = "Single";
-    notification.title = event.params.title.toString();
-    notification.body = event.params.body;
-    notification.subscribers = [event.params.subscriber];
-    notification._channel = event.params._channel;
-
-    notification.save();
-    
-    channel.notifications.push(notificationId);
-
-  }
-}
-
-export function handlenotificationToAll(event: notificationToAllEvent): void {
-  const id = event.params._channel.toHex();
-
-  let channel = Channel.load(id)
-
-  if(channel) {
-    let time = Math.floor(Math.random() * 100000000);
-
-    let notificationId = event.params._channel.toHex() + time.toString();
-    let notification = new Notification(notificationId)
-
-    notification.type = "All"
-    notification.title = event.params.title.toString()
-    notification.body = event.params.body;
-    notification.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber);
-    notification._channel = event.params._channel;
-
-    notification.save();
-
-    channel.notifications.push(notificationId)
-  }
+  entity.save()
 }

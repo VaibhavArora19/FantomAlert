@@ -23,5 +23,5 @@ main()
 })
 
 
-//Channels Contract => 0x53Df47f2342F4dDdc06c6A943DC885E7DA4fc651
+//Channels Contract => 0x9cdaf55edFcb42f7A65d2ffbE7A5Fd80Ed65C326
 // startBlock: 13710667
