@@ -23,12 +23,20 @@ export class newChannel__Params {
     this._event = event;
   }
 
+  get channelId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get owner(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
   get title(): string {
-    return this._event.parameters[0].value.toString();
+    return this._event.parameters[2].value.toString();
   }
 
   get description(): string {
-    return this._event.parameters[1].value.toString();
+    return this._event.parameters[3].value.toString();
   }
 }
 
@@ -45,20 +53,24 @@ export class newNotification__Params {
     this._event = event;
   }
 
-  get channelId(): BigInt {
+  get notificationId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
+  get channelId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
   get subscribers(): Array<Address> {
-    return this._event.parameters[1].value.toAddressArray();
+    return this._event.parameters[2].value.toAddressArray();
   }
 
   get title(): string {
-    return this._event.parameters[2].value.toString();
+    return this._event.parameters[3].value.toString();
   }
 
   get description(): string {
-    return this._event.parameters[3].value.toString();
+    return this._event.parameters[4].value.toString();
   }
 }
 

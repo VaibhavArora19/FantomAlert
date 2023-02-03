@@ -53,15 +53,6 @@ export class Notification extends Entity {
     this.set("channelId", Value.fromBigInt(value));
   }
 
-  get channelAddress(): Bytes {
-    let value = this.get("channelAddress");
-    return value!.toBytes();
-  }
-
-  set channelAddress(value: Bytes) {
-    this.set("channelAddress", Value.fromBytes(value));
-  }
-
   get title(): string {
     let value = this.get("title");
     return value!.toString();
@@ -91,9 +82,9 @@ export class Notification extends Entity {
 }
 
 export class Channel extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -101,24 +92,24 @@ export class Channel extends Entity {
     assert(id != null, "Cannot save Channel entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type Channel must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type Channel must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Channel", id.toBytes().toHexString(), this);
+      store.set("Channel", id.toString(), this);
     }
   }
 
-  static load(id: Bytes): Channel | null {
-    return changetype<Channel | null>(store.get("Channel", id.toHexString()));
+  static load(id: string): Channel | null {
+    return changetype<Channel | null>(store.get("Channel", id));
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get owner(): Bytes {
@@ -155,5 +146,14 @@ export class Channel extends Entity {
 
   set notifications(value: Array<Bytes>) {
     this.set("notifications", Value.fromBytesArray(value));
+  }
+
+  get totalSubscribers(): Array<Bytes> {
+    let value = this.get("totalSubscribers");
+    return value!.toBytesArray();
+  }
+
+  set totalSubscribers(value: Array<Bytes>) {
+    this.set("totalSubscribers", Value.fromBytesArray(value));
   }
 }

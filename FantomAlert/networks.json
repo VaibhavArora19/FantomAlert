@@ -1,8 +1,0 @@
-{
-  "fantom-testnet": {
-    "Channels": {
-      "address": "0x9cdaf55edFcb42f7A65d2ffbE7A5Fd80Ed65C326",
-      "startBlock": 13716664
-    }
-  }
-}

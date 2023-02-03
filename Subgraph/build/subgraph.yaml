@@ -6,9 +6,9 @@ dataSources:
     name: Channels
     network: fantom-testnet
     source:
-      address: "0x9cdaf55edFcb42f7A65d2ffbE7A5Fd80Ed65C326"
+      address: "0xf0Bb6006eD965449D5698bF6A857663567EF5228"
       abi: Channels
-      startBlock: 13716664
+      startBlock: 13726967
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -21,9 +21,9 @@ dataSources:
         - name: Channels
           file: Channels\abis\Channels.json
       eventHandlers:
-        - event: newChannel(string,string)
+        - event: newChannel(uint256,address,string,string)
           handler: handlenewChannel
-        - event: newNotification(uint256,address[],string,string)
+        - event: newNotification(uint256,uint256,address[],string,string)
           handler: handlenewNotification
         - event: newSubscriber(uint256,address)
           handler: handlenewSubscriber

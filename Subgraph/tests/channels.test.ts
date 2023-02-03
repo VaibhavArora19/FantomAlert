@@ -17,9 +17,16 @@ import { createnewChannelEvent } from "./channels-utils"
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
+    let channelId = BigInt.fromI32(234)
+    let owner = Address.fromString("0x0000000000000000000000000000000000000001")
     let title = "Example string value"
     let description = "Example string value"
-    let newnewChannelEvent = createnewChannelEvent(title, description)
+    let newnewChannelEvent = createnewChannelEvent(
+      channelId,
+      owner,
+      title,
+      description
+    )
     handlenewChannel(newnewChannelEvent)
   })
 
@@ -34,6 +41,18 @@ describe("Describe entity assertions", () => {
     assert.entityCount("newChannel", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
+    assert.fieldEquals(
+      "newChannel",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "channelId",
+      "234"
+    )
+    assert.fieldEquals(
+      "newChannel",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "owner",
+      "0x0000000000000000000000000000000000000001"
+    )
     assert.fieldEquals(
       "newChannel",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",

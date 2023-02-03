@@ -7,6 +7,8 @@ import {
 } from "../generated/Channels/Channels"
 
 export function createnewChannelEvent(
+  channelId: BigInt,
+  owner: Address,
   title: string,
   description: string
 ): newChannel {
@@ -14,6 +16,15 @@ export function createnewChannelEvent(
 
   newChannelEvent.parameters = new Array()
 
+  newChannelEvent.parameters.push(
+    new ethereum.EventParam(
+      "channelId",
+      ethereum.Value.fromUnsignedBigInt(channelId)
+    )
+  )
+  newChannelEvent.parameters.push(
+    new ethereum.EventParam("owner", ethereum.Value.fromAddress(owner))
+  )
   newChannelEvent.parameters.push(
     new ethereum.EventParam("title", ethereum.Value.fromString(title))
   )
@@ -28,6 +39,7 @@ export function createnewChannelEvent(
 }
 
 export function createnewNotificationEvent(
+  notificationId: BigInt,
   channelId: BigInt,
   subscribers: Array<Address>,
   title: string,
@@ -37,6 +49,12 @@ export function createnewNotificationEvent(
 
   newNotificationEvent.parameters = new Array()
 
+  newNotificationEvent.parameters.push(
+    new ethereum.EventParam(
+      "notificationId",
+      ethereum.Value.fromUnsignedBigInt(notificationId)
+    )
+  )
   newNotificationEvent.parameters.push(
     new ethereum.EventParam(
       "channelId",

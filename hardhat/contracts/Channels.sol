@@ -4,7 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract Channels {
 
-    event newChannel(uint channelId, string title, string description);
+    event newChannel(uint channelId, address owner, string title, string description);
     event newSubscriber(uint channelId, address subscriber);
     event newNotification(uint notificationId, uint channelId, address[] subscribers, string title, string description);
 
@@ -53,7 +53,8 @@ contract Channels {
         allChannels.push(Channel(channels, msg.sender, _title, _description));
         hasChannel[msg.sender] = true;
 
-        emit newChannel(channels, _title, _description);
+        emit newChannel(channels, msg.sender, _title, _description);
+        channels++; 
     }
 
     ///@dev subscribe to a channel
