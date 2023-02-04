@@ -4,11 +4,11 @@ import {
   newNotification as newNotificationEvent,
   newSubscriber as newSubscriberEvent
 } from "../generated/Channels/Channels"
-import { Channel, Notification } from "../generated/schema"
+import { Channel, Notification, Subscriber } from "../generated/schema"
 
 export function handlenewChannel(event: newChannelEvent): void {
   let channel = new Channel(
-    event.params.channelId.toHex()
+    event.params.channelId.toString()
   )
   channel.title = event.params.title
   channel.description = event.params.description
@@ -21,13 +21,28 @@ export function handlenewChannel(event: newChannelEvent): void {
 
 export function handlenewSubscriber(event: newSubscriberEvent): void {
 
-  let channel = Channel.load(event.params.channelId.toHex());
+  let channel = Channel.load(event.params.channelId.toString());
   
   if(channel) {
-    let totalSubscribers = channel.totalSubscribers;
-    totalSubscribers.push(event.params.subscriber);
-    channel.totalSubscribers = totalSubscribers;
-    channel.save();
+    let subscriber = Subscriber.load(event.params.subscriber);
+
+    if(subscriber) {
+      let totalSubscribers = channel.totalSubscribers;
+      totalSubscribers.push(subscriber.id);
+      channel.totalSubscribers = totalSubscribers;
+      
+      channel.save();
+    }else {
+      let newSubscriber = new Subscriber(event.params.subscriber);
+
+      newSubscriber.save();
+
+      let totalSubscribers = channel.totalSubscribers;
+      totalSubscribers.push(newSubscriber.id);
+      channel.totalSubscribers = totalSubscribers;
+
+      channel.save();
+    }
   }
 
 }
@@ -38,9 +53,9 @@ export function handlenewNotification(event: newNotificationEvent): void {
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   
-  let channel = Channel.load(event.params.channelId.toHex());
+  let channel = Channel.load(event.params.channelId.toString());
 
-  notification.channelId = event.params.channelId
+  notification.channelId = event.params.channelId;
   notification.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber)
   notification.title = event.params.title
   notification.description = event.params.description

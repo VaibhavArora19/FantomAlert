@@ -6,9 +6,9 @@ dataSources:
     name: Channels
     network: fantom-testnet
     source:
-      address: "0xf0Bb6006eD965449D5698bF6A857663567EF5228"
+      address: "0x60bD227D0EcD35C7518D361aBf395eFcEb2AacCa"
       abi: Channels
-      startBlock: 13726967
+      startBlock: 13727134
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

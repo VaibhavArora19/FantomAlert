@@ -1,9 +1,13 @@
+type Subscriber @entity {
+  id : Bytes! # address
+}
+
 type Notification @entity {
   id: Bytes!
   channelId: BigInt! # uint256
   title: String! # string
   description: String! # string
-  subscribers: [Bytes!]! # address[]
+  subscribers: [Subscriber!]! # address[]
 }
 
 type Channel @entity {
@@ -12,5 +16,5 @@ type Channel @entity {
  title: String! # string
  description: String! # string
  notifications: [Notification!]!
- totalSubscribers: [Bytes!]! # address[]
+ totalSubscribers: [Subscriber!]! # address[]
 }
