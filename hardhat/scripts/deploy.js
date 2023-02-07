@@ -22,6 +22,6 @@ main()
   process.exit(1)
 })
 
-
+//contract needs to be redeployed
 //Channels Contract => 0x60bD227D0EcD35C7518D361aBf395eFcEb2AacCa
 // startBlock: 13727134

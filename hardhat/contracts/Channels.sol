@@ -41,6 +41,9 @@ contract Channels {
     ///@dev allow one user to create only one channel
     mapping(address => bool) public hasChannel;
 
+    ///@dev mapping of address with the subscribed channels
+    mapping(address => uint[]) public subscribedChannels;
+
     /**
     *@dev create a new channel
     *@param _title the title of the channel
@@ -61,8 +64,16 @@ contract Channels {
     ///@param _id the id of the channel
     function subscribe(uint _id) external {
         require(_id >= 0 && _id <= channels, "Channel does not exist");
+        
+        for(uint i =0; i<subscribersOfAChannel[_id].length; i++){
+            if(subscribersOfAChannel[_id][i] == msg.sender) {
+                revert("You have already subscribed");
+            }
+        }
+
         subscribersOfAChannel[_id].push(msg.sender);      
-    
+        subscribedChannels[msg.sender].push(_id);
+        
         emit newSubscriber(_id, msg.sender);
     }
 
