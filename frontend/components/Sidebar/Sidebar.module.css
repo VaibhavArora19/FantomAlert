@@ -1,12 +1,13 @@
 .sidebar {
-    border-right: 1px solid black;
     width:240px;
     height: 100vh;
+    position: fixed;
+    z-index: 10;
 }
 
 .sidebar div {
     cursor: pointer;
-    border-radius: 12px;
+    /* border-radius: 12px; */
 }
 
 .sidebar h1 {
