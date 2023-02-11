@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import ChannelForm from "@/components/ChannelForm/ChannelForm";
 import { useContext } from "react";
 import { AppContext } from "@/context/DataContext";
+import { Web3Button } from "@web3modal/react";
 
 const App = () => {
     const ctx = useContext(AppContext);
@@ -18,8 +19,11 @@ const App = () => {
         <div className="flex gap-4 ml-4">
             <Sidebar />
             <div className="ml-64 w-full">
+                <div className="absolute inset-y-4 right-8">
+                    <Web3Button />
+                </div>
             { ctx.sharedState.activeTab === "channels" ?
-                <div style={channels} className="mt-28">
+                <div style={channels} className="mt-24">
                     <Card />
                     <Card />
                     <Card />
@@ -27,7 +31,7 @@ const App = () => {
                     <Card />
                 </div>
                 : ctx.sharedState.activeTab === "create" ?
-                <div className="mt-28 h-full" style={channels}>
+                <div className="mt-24 h-full" style={channels}>
                     <ChannelForm />
                 </div>
                 : ctx.sharedState.activeTab === "notifications" ?
