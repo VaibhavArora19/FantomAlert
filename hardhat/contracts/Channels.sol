@@ -44,6 +44,7 @@ contract Channels {
     ///@dev mapping of address with the subscribed channels
     mapping(address => uint[]) public subscribedChannels;
 
+
     /**
     *@dev create a new channel
     *@param _title the title of the channel
@@ -155,6 +156,10 @@ contract Channels {
         require(msg.sender == allChannels[_id].owner, "You are not the owner of this channel");
 
         return notificationsOfAChannel[_id];
+    }
+
+    function getAllChannels() public view returns(Channel[] memory) {
+        return allChannels;
     }
 
     fallback() external payable{}
