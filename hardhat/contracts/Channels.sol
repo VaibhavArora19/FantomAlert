@@ -45,6 +45,9 @@ contract Channels {
     mapping(address => uint[]) public subscribedChannels;
 
 
+    ///@dev mapping of address with the created channel
+    mapping(address => Channel) public ownedChannel;
+
     /**
     *@dev create a new channel
     *@param _title the title of the channel
@@ -56,7 +59,8 @@ contract Channels {
 
         allChannels.push(Channel(channels, msg.sender, _title, _description));
         hasChannel[msg.sender] = true;
-
+        ownedChannel[msg.sender] = Channel(channels, msg.sender, _title, _description);
+        
         emit newChannel(channels, msg.sender, _title, _description);
         channels++; 
     }

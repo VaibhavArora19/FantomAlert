@@ -6,6 +6,8 @@ import { AppContext } from "@/context/DataContext";
 import { Web3Button } from "@web3modal/react";
 import { useContract, useSigner } from "wagmi";
 import { contractAddress, ABI } from "@/constants";
+import Notifications from "@/components/Notifications/Notifications";
+import NotificationForm from "@/components/NotificationForm/NotificationForm";
 
 const App = () => {
     const [channels, setChannels] = useState([])
@@ -51,10 +53,12 @@ const App = () => {
                     <ChannelForm />
                 </div>
                 : ctx.sharedState.activeTab === "notifications" ?
-                <div>
+                <div className="mt-24 h-full" style={channelStyles}>
+                    <Notifications />
                 </div>
                 :
-                <div>
+                <div className="mt-24 h-full" style={channelStyles}>
+                    <NotificationForm />
                 </div>   
             }
         </div>
