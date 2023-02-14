@@ -23,5 +23,5 @@ main()
 })
 
 //contract needs to be redeployed
-//Channels Contract => 0x60bD227D0EcD35C7518D361aBf395eFcEb2AacCa
-// startBlock: 13727134
+//Channels Contract => 0xddDe75Cd5cBe775A82Ca76D2080a24082Ce6927f
+// startBlock: 13899200

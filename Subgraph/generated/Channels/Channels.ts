@@ -135,6 +135,24 @@ export class Channels__allChannelsResult {
   }
 }
 
+export class Channels__getAllChannelsResultValue0Struct extends ethereum.Tuple {
+  get id(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get owner(): Address {
+    return this[1].toAddress();
+  }
+
+  get name(): string {
+    return this[2].toString();
+  }
+
+  get description(): string {
+    return this[3].toString();
+  }
+}
+
 export class Channels__getAllNotificationsResultValue0Struct extends ethereum.Tuple {
   get title(): string {
     return this[0].toString();
@@ -146,6 +164,45 @@ export class Channels__getAllNotificationsResultValue0Struct extends ethereum.Tu
 
   get subscribers(): Array<Address> {
     return this[2].toAddressArray();
+  }
+}
+
+export class Channels__ownedChannelResult {
+  value0: BigInt;
+  value1: Address;
+  value2: string;
+  value3: string;
+
+  constructor(value0: BigInt, value1: Address, value2: string, value3: string) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromAddress(this.value1));
+    map.set("value2", ethereum.Value.fromString(this.value2));
+    map.set("value3", ethereum.Value.fromString(this.value3));
+    return map;
+  }
+
+  getId(): BigInt {
+    return this.value0;
+  }
+
+  getOwner(): Address {
+    return this.value1;
+  }
+
+  getName(): string {
+    return this.value2;
+  }
+
+  getDescription(): string {
+    return this.value3;
   }
 }
 
@@ -204,6 +261,33 @@ export class Channels extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getAllChannels(): Array<Channels__getAllChannelsResultValue0Struct> {
+    let result = super.call(
+      "getAllChannels",
+      "getAllChannels():((uint256,address,string,string)[])",
+      []
+    );
+
+    return result[0].toTupleArray<Channels__getAllChannelsResultValue0Struct>();
+  }
+
+  try_getAllChannels(): ethereum.CallResult<
+    Array<Channels__getAllChannelsResultValue0Struct>
+  > {
+    let result = super.tryCall(
+      "getAllChannels",
+      "getAllChannels():((uint256,address,string,string)[])",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      value[0].toTupleArray<Channels__getAllChannelsResultValue0Struct>()
+    );
   }
 
   getAllNotifications(
@@ -279,6 +363,75 @@ export class Channels extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  ownedChannel(param0: Address): Channels__ownedChannelResult {
+    let result = super.call(
+      "ownedChannel",
+      "ownedChannel(address):(uint256,address,string,string)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return new Channels__ownedChannelResult(
+      result[0].toBigInt(),
+      result[1].toAddress(),
+      result[2].toString(),
+      result[3].toString()
+    );
+  }
+
+  try_ownedChannel(
+    param0: Address
+  ): ethereum.CallResult<Channels__ownedChannelResult> {
+    let result = super.tryCall(
+      "ownedChannel",
+      "ownedChannel(address):(uint256,address,string,string)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new Channels__ownedChannelResult(
+        value[0].toBigInt(),
+        value[1].toAddress(),
+        value[2].toString(),
+        value[3].toString()
+      )
+    );
+  }
+
+  subscribedChannels(param0: Address, param1: BigInt): BigInt {
+    let result = super.call(
+      "subscribedChannels",
+      "subscribedChannels(address,uint256):(uint256)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromUnsignedBigInt(param1)
+      ]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_subscribedChannels(
+    param0: Address,
+    param1: BigInt
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "subscribedChannels",
+      "subscribedChannels(address,uint256):(uint256)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromUnsignedBigInt(param1)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 

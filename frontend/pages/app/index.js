@@ -8,6 +8,7 @@ import { useContract, useSigner } from "wagmi";
 import { contractAddress, ABI } from "@/constants";
 import Notifications from "@/components/Notifications/Notifications";
 import NotificationForm from "@/components/NotificationForm/NotificationForm";
+import Channels from "@/components/Channels/Channels";
 
 const App = () => {
     const [channels, setChannels] = useState([])
@@ -43,10 +44,7 @@ const App = () => {
                 </div>
             { ctx.sharedState.activeTab === "channels" ?
                 <div style={channelStyles} className="mt-24">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
+                    <Channels />     
                 </div>
                 : ctx.sharedState.activeTab === "create" ?
                 <div className="mt-24 h-full" style={channelStyles}>
