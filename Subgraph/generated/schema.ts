@@ -78,13 +78,13 @@ export class Notification extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get channelId(): BigInt {
-    let value = this.get("channelId");
-    return value!.toBigInt();
+  get channel(): string {
+    let value = this.get("channel");
+    return value!.toString();
   }
 
-  set channelId(value: BigInt) {
-    this.set("channelId", Value.fromBigInt(value));
+  set channel(value: string) {
+    this.set("channel", Value.fromString(value));
   }
 
   get title(): string {

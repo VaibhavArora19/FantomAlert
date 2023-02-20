@@ -55,7 +55,7 @@ export function handlenewNotification(event: newNotificationEvent): void {
   
   let channel = Channel.load(event.params.channelId.toString());
 
-  notification.channelId = event.params.channelId;
+  notification.channel = event.params.channelId.toString();
   notification.subscribers = event.params.subscribers.map<Bytes>((subscriber:Bytes) => subscriber)
   notification.title = event.params.title
   notification.description = event.params.description

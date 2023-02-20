@@ -4,7 +4,7 @@ type Subscriber @entity {
 
 type Notification @entity {
   id: Bytes!
-  channelId: BigInt! # uint256
+  channel: Channel!
   title: String! # string
   description: String! # string
   subscribers: [Subscriber!]! # address[]
