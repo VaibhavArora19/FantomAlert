@@ -9,6 +9,7 @@ import { contractAddress, ABI } from "@/constants";
 import Notifications from "@/components/Notifications/Notifications";
 import NotificationForm from "@/components/NotificationForm/NotificationForm";
 import Channels from "@/components/Channels/Channels";
+import SubscribedChannels from "@/components/Channels/SubscribedChannels";
 
 const App = () => {
     const [channels, setChannels] = useState([])
@@ -54,10 +55,14 @@ const App = () => {
                 <div className="mt-24 h-full" style={channelStyles}>
                     <Notifications />
                 </div>
-                :
+                : ctx.sharedState.activeTab === "send" ?
                 <div className="mt-24 h-full" style={channelStyles}>
                     <NotificationForm />
-                </div>   
+                </div>
+                :
+                <div className="mt-24 h-full" style={channelStyles}>
+                   <SubscribedChannels />
+                </div>
             }
         </div>
         </div>

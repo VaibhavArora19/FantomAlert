@@ -41,7 +41,7 @@ const Card = (props) => {
                     <p className="mt-2 w-10/12">{props.description}</p>
                     <div className="flex gap-3">
                         <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers.length}</p>
-                        <p className="mt-6 ml-2 tracking-wide w-36 bg-slate-200 rounded-lg text-center text-slate-600">By: {props.owner.substr(0, 5)+ "..."+props.owner.substr(37,402)}</p>
+                        <p className="mt-6 ml-2 tracking-wide w-36 bg-slate-200 rounded-lg text-center text-slate-600">By: {props.owner.substr(0, 5)+ "..."+props.owner.substr(37,42)}</p>
                     </div>
                 </div>
             </div>

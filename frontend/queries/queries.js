@@ -53,3 +53,17 @@ export const singleNotificationQuery = gql`
     }
   }
 `
+
+export const subscribedChannelsQuery = gql`
+  query subscribedChannelQuery($id: Bytes!) {
+    channels(where: {totalSubscribers_: {id: $id}}) {
+      id
+      owner
+      title
+      description
+      totalSubscribers {
+        id
+      }
+    }
+  }
+`
