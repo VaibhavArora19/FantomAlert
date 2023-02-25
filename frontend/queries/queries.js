@@ -67,3 +67,14 @@ export const subscribedChannelsQuery = gql`
     }
   }
 `
+
+export const ownedChannelQuery = gql`
+ query ownedChannelQuery($id: Bytes!) {
+  channels(where: {owner: $id}) {
+    id,
+    owner,
+    title,
+    description
+  }
+ }
+`

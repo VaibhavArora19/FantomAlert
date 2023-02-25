@@ -33,7 +33,9 @@ const App = () => {
         borderTop: "1px solid white",
         borderLeft: "1px solid white",
         borderRadius: "20px 0 0 0",
-        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
+        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+        backgroundColor: "white",
+        color: "black"
     }
 
     return (

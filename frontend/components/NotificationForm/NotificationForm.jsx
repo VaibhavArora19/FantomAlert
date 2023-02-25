@@ -1,7 +1,8 @@
-import {useRef} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import { useContract, useAccount, useSigner} from "wagmi";
 import { ABI, contractAddress } from '@/constants';
-
+import { createClient } from 'urql';
+import { ownedChannelQuery } from '@/queries/queries';
 
 const NotificationForm = () => {
     const titleRef = useRef();
@@ -14,6 +15,22 @@ const NotificationForm = () => {
         contract: contractAddress,
         signerOrProvider: signer
     })
+    const [ownedChannel, setOwnedChannel] = useState();
+
+    useEffect(() => {
+
+        if(address) {
+            (async function() {
+                const client = createClient({
+                    url: 'https://api.thegraph.com/subgraphs/name/vaibhavarora19/getter'
+                });
+
+                const channelDetails = await client.query(ownedChannelQuery, {id: address.toLowerCase()}).toPromise();
+                setOwnedChannel(channelDetails.data.channels[0]);
+            })();
+        }
+
+    }, [address]);
 
     const sendNotificationHandler = (event) => {
         event.preventDefault();
@@ -29,10 +46,10 @@ const NotificationForm = () => {
             </div>
             <div className="flex justify-around mt-10">
                 <div className="bg-blue-100 w-2/12 h-8 rounded-xl text-center">
-                    <h3 className="text-blue-500 text-lg font-medium">Channel ID: 12</h3>
+                    <h3 className="text-blue-500 text-lg font-medium">Channel ID: {ownedChannel && ownedChannel.id}</h3>
                 </div>
-                <div className="bg-pink-100 w-1/12 h-8 rounded-xl text-center">
-                    <h3 className="text-pink-500 text-lg font-medium">Audible</h3>
+                <div className="bg-pink-100 w-2/12 h-8 rounded-xl text-center">
+                    <h3 className="text-pink-500 text-lg font-medium">{ownedChannel && ownedChannel.title}</h3>
                 </div>
             </div>
             <div className="mt-8 ml-64">
