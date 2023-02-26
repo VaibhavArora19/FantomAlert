@@ -1,3 +1,5 @@
+import Particle from "../Particle/Particle";
+
 const LandingPage = () => {
     return (
         <div className="flex justify-between ml-48 mt-28">
@@ -8,6 +10,9 @@ const LandingPage = () => {
                     <button className="btn btn-primary w-52 mr-4">Launch App</button>
                     <button className="btn btn-outline">Explore Fantom Alert</button>
                 </div>
+            </div>
+            <div className="mr-28 relative bottom-8">
+                <Particle />
             </div>
         </div>
     )
