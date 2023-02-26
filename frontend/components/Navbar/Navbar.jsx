@@ -4,8 +4,8 @@ const Navbar = () => {
     const router = useRouter();
 
     return (
-        <div className="flex justify-around mt-6">
-            <div className="cursor-pointer" onClick={() => {router.push("/")}}>
+        <div className="flex justify-around pt-6">
+            <div className="cursor-pointer" onClick={() => {return router.push("/")}}>
                 <h1 className="text-2xl tracking-wider font-semibold mt-1">Fantom Alert</h1>
             </div>
             <div className="cursor-pointer" onClick={() => {router.push("/docs")}}>
