@@ -9,11 +9,12 @@ const NotificationForm = () => {
     const descriptionRef = useRef();
     const subscribersRef = useRef();
     const {address} = useAccount();
+    const [isLoading, setIsLoading] = useState(false);
     const [allSubscribers, setAllSubscribers] = useState(false);
     const {data: signer} = useSigner();
     const contract = useContract({
         abi: ABI,
-        contract: contractAddress,
+        address: contractAddress,
         signerOrProvider: signer
     })
     const [ownedChannel, setOwnedChannel] = useState();
@@ -35,9 +36,10 @@ const NotificationForm = () => {
 
     const sendNotificationHandler = async (event) => {
         event.preventDefault();
-
+        setIsLoading(true);
         if(allSubscribers) {
             await contract?.notificationForAll(ownedChannel.id, titleRef.current.value, descriptionRef.current.value);
+            setIsLoading(false);
             return;
         }
 
@@ -54,14 +56,14 @@ const NotificationForm = () => {
                 await contract?.notificationForMultiple(ownedChannel.id, subscribers, titleRef.current.value, descriptionRef.current.value);
             }
         }
-
+        setIsLoading(false);
     };
 
 
     return (
         <div>
             <div className="mt-16 w-42">
-                <h1 className="text-3xl text-center tracking-medium">Send Notification</h1>
+                <h1 className="text-3xl text-center">Send Notification</h1>
             </div>
             <div className="flex justify-around mt-10">
                 <div className="bg-blue-100 w-2/12 h-8 rounded-xl text-center">
@@ -98,7 +100,7 @@ const NotificationForm = () => {
                         <p>Send to all subscribers</p>
                     </div>
                     </div>
-                    <button className="btn btn-info btn-wide block text-white ml-60 mt-12">Send Notification</button>
+                    <button className={`btn btn-info btn-wide block text-white ml-60 mt-12`}>{isLoading ? "Sending Notification" : "Send Notification"}</button>
                 </form>
             </div>
         </div>

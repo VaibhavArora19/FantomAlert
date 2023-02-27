@@ -10,6 +10,7 @@ import Notifications from "@/components/Notifications/Notifications";
 import NotificationForm from "@/components/NotificationForm/NotificationForm";
 import Channels from "@/components/Channels/Channels";
 import SubscribedChannels from "@/components/Channels/SubscribedChannels";
+import styles from "../../styles/App.module.css";
 
 const App = () => {
     const [channels, setChannels] = useState([])
@@ -39,14 +40,14 @@ const App = () => {
     }
 
     return (
-        <div className="flex gap-4 ml-4">
+        <div className={`flex gap-4 ml-4 ${styles.app}`}>
             <Sidebar />
             <div className="ml-64 w-full">
                 <div className="absolute inset-y-4 right-8">
                     <Web3Button />
                 </div>
             { ctx.sharedState.activeTab === "channels" ?
-                <div style={channelStyles} className="mt-24">
+                <div style={channelStyles} className="mt-24 h-full">
                     <Channels />     
                 </div>
                 : ctx.sharedState.activeTab === "create" ?

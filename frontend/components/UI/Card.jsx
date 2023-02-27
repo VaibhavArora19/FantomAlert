@@ -37,7 +37,7 @@ const Card = (props) => {
                     <Image src="/bell.jpg" className="border-2 mt-4 rounded-2xl" width={74} height={74} alt="channels Image"/>
                 </div>
                 <div className="mb-6">
-                    <h1 className="text-xl tracking-widest font-medium">{props.name}</h1>
+                    <h1 className="text-2xl mt-2 font-medium">{props.name}</h1>
                     <p className="mt-2 w-10/12">{props.description}</p>
                     <div className="flex gap-3">
                         <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers.length}</p>

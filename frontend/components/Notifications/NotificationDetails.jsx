@@ -3,6 +3,7 @@ import { createClient } from "urql";
 import { useRouter } from "next/router";
 import { singleNotificationQuery } from "@/queries/queries";
 import Image from "next/image";
+import styles from "./NotificationDetails.module.css";
 
 const NotificationDetails = () => {
     const [notification, setNotification] = useState();
@@ -22,29 +23,29 @@ const NotificationDetails = () => {
     return (
         <>
         {
-        notification && <div>   
-            <h1 className="text-3xl text-center font-medium">{notification.title}</h1>
-            <div className="flex gap-96">
-                <div>
-                    <Image src="/bell.jpg" width={240} height={240} alt="Notification icon"/>
-                </div>
+        notification && <div className={`w-11/12`}>   
+            <h1 className="text-3xl text-center m-auto font-semibold border-b-4 border-blue-500 w-52">{notification.title}</h1>
+            <div className="flex gap-40">
                 <div className="mt-20">
-                    <h3>{notification.description}</h3>
+                    <Image src="/notification-undraw.svg" width={1000} height={1000} alt="Notification icon"/>
+                </div>
+                <div className="mt-28">
+                    <h3 className="text-xl w-11/12 leading-7">{notification.description}</h3>
                 </div>
             </div>
-            <div>
-                <h1>Channel Details</h1>
-                <div>
-                    <h2>Title</h2>
-                    <h3>{notification.channel.title}</h3>
+            <div className="mt-20">
+                <h1 className="text-center m-auto border-b-4 border-blue-500 w-60 font-semibold text-3xl">Channel Details</h1>
+                <div className="ml-10 mt-10">
+                    <h2 className="text-2xl font-semibold border-b-4 border-blue-500 w-20">Name</h2>
+                    <h3 className="mt-4 text-xl">{notification.channel.title}</h3>
                 </div>
-                <div>
-                    <h2>Description</h2>
-                    <h3>{notification.channel.description}</h3>
+                <div className=" mt-6 ml-10">
+                    <h2 className="text-2xl font-semibold border-b-4 border-blue-500 w-32">Description</h2>
+                    <h3 className="mt-4 text-xl">{notification.channel.description}</h3>
                 </div>
-                <div>
-                    <h2>Subscribers</h2>
-                    <h3>{notification.channel.totalSubscribers.length}</h3>
+                <div className="mt-6 ml-10 flex gap-6 mb-4">
+                    <h2 className="text-2xl font-semibold border-b-4 border-blue-500 w-36">Subscribers</h2>
+                    <h3 className="mt-2 text-2xl">{notification.channel.totalSubscribers.length}</h3>
                 </div>
             </div>
         </div>

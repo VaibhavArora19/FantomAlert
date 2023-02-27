@@ -16,7 +16,7 @@ const NotificationCard = (props) => {
                 <Image src="/notification.png" className="border-2 mt-4 rounded-2xl" width={60} height={60} alt="Bell Icon"/>
             </div>
             <div className="mb-6">
-                    <h1 className="text-xl tracking-widest font-medium">{props.channelName}</h1>
+                    <h1 className="text-xl mt-4 font-medium">{props.channelName}</h1>
                     <p className="mt-2 text-md">{props.title}</p>
                     <div className="flex gap-3">
                         <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers.length}</p>
