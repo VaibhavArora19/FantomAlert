@@ -21,7 +21,7 @@ const Card = (props) => {
         if(address) {
 
             const user = props.subscribers.filter((subscriber) => {return subscriber.id.toLowerCase() === address.toLowerCase()});
-            if(user.length > 0) {
+            if(user?.length > 0) {
                 setIsSubscribed(true);
             }
         }
@@ -41,8 +41,8 @@ const Card = (props) => {
                     <h1 className="text-2xl pt-4 text-slate-700 leading-4 font-semibold">{props.name}</h1>
                     <p className="mt-2 w-10/12">{props.description}</p>
                     <div className="flex gap-3">
-                        <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers.length}</p>
-                        <p className="mt-6 ml-2 tracking-wide w-36 bg-slate-200 rounded-lg text-center text-slate-600">By: {props.owner.substr(0, 5)+ "..."+props.owner.substr(37,42)}</p>
+                        <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers?.length}</p>
+                        <p className="mt-6 ml-2 tracking-wide w-36 bg-slate-200 rounded-lg text-center text-slate-600">By: {props.owner?.substr(0, 5)+ "..."+props.owner?.substr(37,42)}</p>
                     </div>
                 </div>
             </div>
