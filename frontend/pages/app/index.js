@@ -35,8 +35,11 @@ const App = () => {
         borderLeft: "1px solid white",
         borderRadius: "20px 0 0 0",
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-        backgroundColor: "white",
-        color: "black"
+        backgroundColor:"#FFFFFF",
+        color: "black",
+        backdropFilter: "blur(10px)",
+        // position: "fixed",
+        // width:"85%"
     }
 
     return (
@@ -47,7 +50,7 @@ const App = () => {
                     <Web3Button />
                 </div>
             { ctx.sharedState.activeTab === "channels" ?
-                <div style={channelStyles} className="mt-24 h-full">
+                <div style={channelStyles} className="mt-24 h-full overflow-hidden">
                     <Channels />     
                 </div>
                 : ctx.sharedState.activeTab === "create" ?

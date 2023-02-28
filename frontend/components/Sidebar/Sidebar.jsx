@@ -31,7 +31,7 @@ const Sidebar = () => {
             <div onClick={() => {changeTabHandler("send")}} className={`mb-10 text-md w-56 tracking-wider h-10 mr-4 hover:border-solid hover:border-r-2 hover:border-blue-500 ${activeTab === 'send' && 'border-solid border-r-2 font-semibold border-white'}`}>
                 <h1><i className="fa-light text-xl fa-paper-plane-top"></i>&nbsp; &nbsp;Send Notification</h1>
             </div>
-            <div onClick={() => {changeTabHandler("subscribedChannels")}} className={`mb-10 text-md w-56 tracking-wider h-10 mr-4 hover:border-solid hover:border-r-2 hover:border-blue-500 ${activeTab === 'subscribedChannels' && 'border-solid border-r-2 font-semibold text-blue-600 border-blue-500'}`}>
+            <div onClick={() => {changeTabHandler("subscribedChannels")}} className={`mb-10 text-md w-56 tracking-wider h-10 mr-4 hover:border-solid hover:border-r-2 hover:border-blue-500 ${activeTab === 'subscribedChannels' && 'border-solid border-r-2 font-semibold border-white'}`}>
                 <h1><i className="fa-regular fa-heart"></i>&nbsp; &nbsp; &nbsp;Subscribed</h1>
             </div>
         </div>

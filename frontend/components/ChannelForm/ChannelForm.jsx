@@ -35,15 +35,15 @@ const ChannelForm = () => {
                     <label className="block mt-4 mb-2">
                         <span className="text-md font-small">Name</span>
                     </label>
-                    <input type="text" placeholder="Channel name" className="pl-4 w-9/12 border-slate-300 border-2 rounded-lg h-12 focus:outline-0 focus:border-blue-300" ref={nameRef} required/>
+                    <input type="text" placeholder="Channel name" className="bg-slate-100 pl-4 w-9/12 border-slate-300 border-2 rounded-lg h-12 focus:outline-0 focus:border-blue-300" ref={nameRef} required/>
                     <label className="block mt-4 mb-2">
                         <span className="text-md font-small">Network</span>
                     </label>
-                    <input type="text" placeholder="Fantom Testnet" className="pl-4 w-9/12 border-slate-300 border-2 rounded-lg h-12 input-disabled focus:outline-0 focus:border-blue-300" disabled/>
+                    <input type="text" placeholder="Fantom Testnet" className="bg-slate-50 color-black pl-4 w-9/12 border-slate-300 border-2 rounded-lg h-12 cursor-not-allowed focus:outline-0 focus:border-blue-300" disabled/>
                     <label className="block mt-4 mb-2">
                         <span className="text-md font-small">Description</span>
                     </label>
-                    <textarea type="text" rows="4" placeholder="Add a short description" className="pl-4 w-9/12 border-slate-300 border-2 rounded-lg pt-2 focus:outline-0 focus:border-blue-300" ref={descriptionRef} required/>
+                    <textarea type="text" rows="4" placeholder="Add a short description" className="bg-slate-100 pl-4 w-9/12 border-slate-300 border-2 rounded-lg pt-2 focus:outline-0 focus:border-blue-300" ref={descriptionRef} required/>
                     <button className={`btn btn-info btn-wide block text-white ml-60 mt-12`}>{isLoading ? "Creating Channel": "Create Channel"}</button>
                 </form>
             </div>

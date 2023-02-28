@@ -13,10 +13,10 @@ const NotificationCard = (props) => {
         <div style={cardBorder} className="flex justify-between ml-4 mt-6 mr-4">
         <div className="flex gap-8 pl-8">
             <div>
-                <Image src="/notification.png" className="border-2 mt-4 rounded-2xl" width={60} height={60} alt="Bell Icon"/>
+                <Image src="/fantom-logo.png" className="mt-4 " width={60} height={60} alt="Bell Icon"/>
             </div>
             <div className="mb-6">
-                    <h1 className="text-xl mt-4 font-medium">{props.channelName}</h1>
+                    <h1 className="text-2xl mt-6 leading-4 text-slate-700 font-semibold">{props.channelName}</h1>
                     <p className="mt-2 text-md">{props.title}</p>
                     <div className="flex gap-3">
                         <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers.length}</p>
@@ -25,7 +25,7 @@ const NotificationCard = (props) => {
                 </div>
         </div>
         <div className="pr-6 pt-10">
-                <Button variant="contained" color="secondary" onClick={() => {router.push(`/notification/${props.id}`)}}>View More</Button>
+                <Button variant="contained" onClick={() => {router.push(`/notification/${props.id}`)}}>View More</Button>
             </div>
         </div>
     )

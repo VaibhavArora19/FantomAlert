@@ -27,6 +27,7 @@ const Card = (props) => {
         }
     }, [address]);
     const subscribeChannelHandler = async () => {
+        if(isSubscribed) return;
         await contract.subscribe(props.id);
     }
 
@@ -34,10 +35,10 @@ const Card = (props) => {
         <div style={cardBorder} className="flex justify-between ml-4 mt-6 mr-4">
             <div className="flex gap-8 pl-8">
                 <div>
-                    <Image src="/bell.jpg" className="border-2 mt-4 rounded-2xl" width={74} height={74} alt="channels Image"/>
+                    <Image src="/icon.png" className="border-2 mt-4 rounded-2xl" width={64} height={64} alt="channels Image"/>
                 </div>
                 <div className="mb-6">
-                    <h1 className="text-2xl mt-2 font-medium">{props.name}</h1>
+                    <h1 className="text-2xl pt-4 text-slate-700 leading-4 font-semibold">{props.name}</h1>
                     <p className="mt-2 w-10/12">{props.description}</p>
                     <div className="flex gap-3">
                         <p className="mt-6 ml-2 tracking-wide w-20 h-6 bg-blue-300 font-medium text-center rounded-lg text-blue-500"><i className="fa-light fa-user"></i>&nbsp;&nbsp;{props.subscribers.length}</p>
@@ -45,7 +46,7 @@ const Card = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="pr-6 pt-10">
+            <div className="pr-8 pt-10">
                 <Button variant="contained" onClick={subscribeChannelHandler}>{isSubscribed ? "Subscribed": "Subscribe"}</Button>
             </div>
         </div>
