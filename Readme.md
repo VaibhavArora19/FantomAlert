@@ -112,7 +112,7 @@ Refer <a href="https://github.com/VaibhavArora19/FantomAlert/blob/main/Api.md">h
 
 ## 🤔 Bug Reports/Feature Requests
 
-Kindly open an issue if you face any king of bug or any other kind of problem by going <a href = "https://github.com/VaibhavArora19/FantomAlert/issues">here</a>.
+Kindly open an issue if you face any kind of bug or any other kind of problem by going <a href = "https://github.com/VaibhavArora19/FantomAlert/issues">here</a>.
 
 <br/>
 
