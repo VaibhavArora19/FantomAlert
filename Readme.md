@@ -41,7 +41,7 @@ IChannels public channel = IChannels(0xddDe75Cd5cBe775A82Ca76D2080a24082Ce6927f)
 - You can create a channel using createChannel function
     
 ```bash
-channel.createChannel(string calldata name, string calldata description);
+channel.createChannel{value: 0.001 ether}(string calldata name, string calldata description);
 ```
 
 - A user can subscribe to the channel using the subscribe function
@@ -107,3 +107,15 @@ While `getSubscribers` & `getAllNotifications` can only be called by the owner o
 
 Fantom Alert also provides you the API that you can call to read data. To implement API in your application.
 Refer <a href="https://github.com/VaibhavArora19/FantomAlert/blob/main/Api.md">here</a>
+
+<br/>
+
+## 🤔 Bug Reports/Feature Requests
+
+Kindly open an issue if you face any king of bug or any other kind of problem by going <a href = "https://github.com/VaibhavArora19/FantomAlert/issues">here</a>.
+
+<br/>
+
+## Support
+
+Kindly support me if you like the project by starring 🌟 the project. It'll be much appreciated 😄.
