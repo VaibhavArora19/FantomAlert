@@ -13,7 +13,7 @@ Fantom Alert smart contract is deployed on Fantom Testnet as of now. You can che
 
 ### Subgraph
 
-Fantom Alert heavily depends on the subgraph it uses under the hood. The graph helps Fantom Alert carrying out the functionality it is providing. You can checkout the subgraph that Fantom Alert uses <a href="https://thegraph.com/hosted-service/subgraph/vaibhavarora19/getter/edit">here</a> and you can query the subgraph using the URI given below
+Fantom Alert heavily depends on the subgraph it uses under the hood. The graph helps Fantom Alert carrying out the functionality it is providing. You can checkout the subgraph that Fantom Alert uses <a href="https://thegraph.com/hosted-service/subgraph/vaibhavarora19/getter">here</a> and you can query the subgraph using the URI given below
 
 ```
 https://api.thegraph.com/subgraphs/name/vaibhavarora19/getter
@@ -38,8 +38,72 @@ import {IChannels} from "https://github.com/VaibhavArora19/FantomAlert/blob/main
 IChannels public channel = IChannels(0xddDe75Cd5cBe775A82Ca76D2080a24082Ce6927f);
 ```
 
-- Now you can call the contract function and start sending notifications to your subscribers😉
+- You can create a channel using createChannel function
+    
+```bash
+channel.createChannel(string calldata name, string calldata description);
+```
+
+- A user can subscribe to the channel using the subscribe function
 
 ```bash
-    channel.createChannel(string calldata name, string calldata description)
+channel.susbcribe(uint id);
 ```
+
+<br />
+<h1 align="center">Sending notification</h1>
+
+<br/>
+
+There are multiple functions to send notification to your subscribers depending on your use case. Only owner of the contract can call these functions.
+
+<br/>
+
+Send notification to only one subscriber👇
+
+```bash
+channel.notificationForSingle(uint _id, address subscriber, string calldata title, string calldata description);
+```
+
+Send notification to multiple subscribers👇
+
+```bash 
+channel.notificationForMultiple(uint _id, address[] memory subscribers, string calldata title, string calldata description);
+```
+
+Send notification all subscribers👇
+```bash
+channel.notificationForAll(uint _id, string calldata title, string calldata description);
+```
+
+<br/>
+
+<h3>Read methods</h3>
+
+There are some read methods as well that allows you to directly read from the blockchain state.
+
+<br/>
+
+Get all the subscribers of a channel👇
+
+```bash 
+channel.getSubscribers(uint _id);
+```
+
+
+Get all notifications of a channel👇
+```bash
+channel.getAllNotifications(uint _id);
+```
+
+Get all channels👇
+```bash
+channel.getAllChannels();
+```
+
+While `getSubscribers` & `getAllNotifications` can only be called by the owner of the channel. The function `getAllChannels` can be called by anyone.
+<br/>
+## API
+
+Fantom Alert also provides you the API that you can call to read data. To implement API in your application.
+Refer <a href="https://github.com/VaibhavArora19/FantomAlert/blob/main/Api.md">here</a>
