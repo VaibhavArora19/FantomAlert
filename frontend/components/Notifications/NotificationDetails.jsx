@@ -25,18 +25,18 @@ const NotificationDetails = () => {
         <>
         {
         notification && <div className={`w-11/12`}>   
-            <h1 className="text-3xl text-center m-auto font-semibold border-b-4 border-blue-500 w-52">{notification.title}</h1>
+            <h1 className="text-3xl text-center m-auto font-semibold border-b-4 border-blue-500 w-80">{notification.title}</h1>
             <div className="flex gap-40">
-                <div className="mt-20">
+                {/* <div className="mt-20">
                     <Image src="/notification-undraw.svg" width={920} height={920} alt="Notification icon"/>
-                </div>
-                <div className="mt-28">
-                    <Window description={notification.description}/>
+                </div> */}
+                <div className="mt-20">
+                    <p className="text-[1.3rem] font-[500]">{notification.description}</p>
                 </div>
             </div>
-            <div className="mt-20">
+            <div className="mt-28">
                 <h1 className="text-center m-auto border-b-4 border-blue-500 w-60 font-semibold text-3xl">Channel Details</h1>
-                <div className="hero mt-28 mb-20 bg-base-200">
+                <div className="hero mt-20 mb-20 bg-base-200">
                     <div className="hero-content flex-col lg:flex-row">
                      <img src="/background.webp" className="max-w-sm rounded-lg shadow-2xl mr-6" />
                          <div>

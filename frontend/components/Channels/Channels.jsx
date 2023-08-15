@@ -24,7 +24,7 @@ const Channels = () => {
             });
 
             const getChannels = await client.query(channelQuery).toPromise();
-            setChannels(getChannels.data.channels)
+            setChannels(getChannels.data.channels.slice(2, getChannels.data.channels.length))
         })()
 
     }, []);
